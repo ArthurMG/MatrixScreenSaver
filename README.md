@@ -1,7 +1,8 @@
 # My Screensaver
 A custom Windows screensaver built with .NET WinForms and C#. Lightweight and resource friendly.
 
-![Preview](assets/preview.png)
+![Preview](Assets/preview.png)
+
 Took some info from https://github.com/carlnewton/digital-rain-analysis, but this is not canonical The Matrix animation.
 
 ## Installation
