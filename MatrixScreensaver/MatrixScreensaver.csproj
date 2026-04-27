@@ -36,6 +36,9 @@
   <PropertyGroup>
     <ApplicationIcon>matrixscreensaver-icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MatrixScreensaver.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -88,7 +91,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="CreateScrFile" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-    <Copy SourceFiles="$(TargetPath)"
-          DestinationFiles="$(TargetDir)$(TargetName).scr" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(TargetDir)$(TargetName).scr" />
   </Target>
 </Project>

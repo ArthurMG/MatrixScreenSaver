@@ -24,7 +24,6 @@ namespace MatrixScreensaver
             InitializeComponent();
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
-
             glyphProvider = new GlyphProvider();
             timer = new Timer();
             timer.Interval = 50;
