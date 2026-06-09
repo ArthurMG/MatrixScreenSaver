@@ -10,9 +10,9 @@ namespace MatrixScreensaver
         public static readonly char[] Chars =
             "ﾊ日ﾋｼﾂｳｰﾅﾐﾓﾆｻﾜｵﾘﾎﾏｴｷﾑﾃｹﾒｶﾕﾗｾﾈｽﾀﾇ012345678\"9Z*+:=.<>｜¦_".ToCharArray();
 
-        public int X;
-        public float Y;
-        private readonly float moveSpeed;
+        private int X;
+        private int Y;
+        private readonly int moveSpeed;
         private int changeCharsSpeed;
         private readonly int screenHeight;
         private readonly int columnHeightPx;
@@ -25,7 +25,7 @@ namespace MatrixScreensaver
         private readonly GlyphProvider glyphProvider;
 
         public Column(int x,
-            float startY,
+            int startY,
             int length,
             Random rand,
             int screenHeight,
@@ -35,6 +35,7 @@ namespace MatrixScreensaver
             this.Y = startY;
             this.rand = rand;
             this.glyphProvider = glyphProvider;
+            this.screenHeight = screenHeight;
 
             columnHeightPx = (length * Settings.CharHeight) + Settings.CharHeight;
 
@@ -53,11 +54,8 @@ namespace MatrixScreensaver
             cg.SmoothingMode = SmoothingMode.None;
 
             var rndCoef = rand.Next(1, 6);
-            moveSpeed = 2f + (0.5F * rndCoef);
+            moveSpeed = Settings.FallSpeed + rndCoef;
             changeCharsSpeed += rndCoef;
-
-            this.screenHeight = screenHeight;
-
             RandomizeGlyphs();
         }
 
@@ -130,7 +128,7 @@ namespace MatrixScreensaver
 
         public void DrawColumn(Graphics g)
         {
-            g.DrawImageUnscaled(columnBitmap, X, (int)Y);
+            g.DrawImageUnscaled(columnBitmap, X, Y);
         }
     }
 }

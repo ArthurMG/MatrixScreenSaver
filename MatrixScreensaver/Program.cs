@@ -51,8 +51,7 @@ namespace MatrixScreensaver
                     break;
 
                 case "/c":
-                    MessageBox.Show("This screen saver has no options", "Screen saver", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Application.Exit();
+                    Application.Run(new SettingsForm());
                     break;
                 default:
                     Application.Exit();

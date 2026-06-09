@@ -22,11 +22,14 @@ namespace MatrixScreensaver
         public MainWindow()
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | 
+                ControlStyles.AllPaintingInWmPaint | 
+                ControlStyles.UserPaint, 
+                true);
 
             glyphProvider = new GlyphProvider();
             timer = new Timer();
-            timer.Interval = 50;
+            timer.Interval = 60;
             timer.Tick += (s, e) => UpdateFrame();
 
             this.KeyDown += MainWindow_KeyDown;
@@ -132,6 +135,10 @@ namespace MatrixScreensaver
 
         private void MainWindow_MouseMove(object sender, MouseEventArgs e)
         {
+            #if DEBUG
+                return;
+            #endif
+
             if (IsPreviewMode)
                 return;
 
