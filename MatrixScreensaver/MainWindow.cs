@@ -29,7 +29,7 @@ namespace MatrixScreensaver
 
             glyphProvider = new GlyphProvider();
             timer = new Timer();
-            timer.Interval = 60;
+            timer.Interval = 50;
             timer.Tick += (s, e) => UpdateFrame();
 
             this.KeyDown += MainWindow_KeyDown;
