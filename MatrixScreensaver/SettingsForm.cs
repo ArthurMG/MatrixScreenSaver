@@ -11,6 +11,7 @@ namespace MatrixScreensaver
         public SettingsForm()
         {
             InitializeComponent();
+            ApplyLocalization();
             this.Load += SettingsForm_Load;
             this.btnOk.Click += BtnOk_Click;
             this.btnCancel.Click += BtnCancel_Click;
@@ -50,6 +51,21 @@ namespace MatrixScreensaver
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void ApplyLocalization()
+        {
+            Text = LocalizedStrings.SettingsForm_Title;
+            gbSize.Text = LocalizedStrings.GbSize_Text;
+            rbSizeSmall.Text = LocalizedStrings.RbSizeSmall_Text;
+            rbSizeMedium.Text = LocalizedStrings.RbSizeMedium_Text;
+            rbSizeLarge.Text = LocalizedStrings.RbSizeLarge_Text;
+            gbSpeed.Text = LocalizedStrings.GbSpeed_Text;
+            rbSpeedSlow.Text = LocalizedStrings.RbSpeedSlow_Text;
+            rbSpeedMedium.Text = LocalizedStrings.RbSpeedMedium_Text;
+            rbSpeedFast.Text = LocalizedStrings.RbSpeedFast_Text;
+            btnOk.Text = LocalizedStrings.BtnOk_Text;
+            btnCancel.Text = LocalizedStrings.BtnCancel_Text;
         }
     }
 }

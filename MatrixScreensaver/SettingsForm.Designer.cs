@@ -36,24 +36,24 @@ namespace MatrixScreensaver
             this.gbSize.Controls.Add(this.rbSizeLarge);
             this.gbSize.Location = new System.Drawing.Point(12, 12);
             this.gbSize.Size = new System.Drawing.Size(260, 88);
-            this.gbSize.Text = "Размер символов";
+            this.gbSize.Text = "Character Size";
 
             // rbSizeSmall
             this.rbSizeSmall.Location = new System.Drawing.Point(6, 20);
             this.rbSizeSmall.Size = new System.Drawing.Size(240, 22);
-            this.rbSizeSmall.Text = "Маленький";
+            this.rbSizeSmall.Text = "Small";
             this.rbSizeSmall.UseVisualStyleBackColor = true;
 
             // rbSizeMedium
             this.rbSizeMedium.Location = new System.Drawing.Point(6, 44);
             this.rbSizeMedium.Size = new System.Drawing.Size(240, 22);
-            this.rbSizeMedium.Text = "Средний";
+            this.rbSizeMedium.Text = "Medium";
             this.rbSizeMedium.UseVisualStyleBackColor = true;
 
             // rbSizeLarge
             this.rbSizeLarge.Location = new System.Drawing.Point(6, 68);
             this.rbSizeLarge.Size = new System.Drawing.Size(240, 22);
-            this.rbSizeLarge.Text = "Большой";
+            this.rbSizeLarge.Text = "Large";
             this.rbSizeLarge.UseVisualStyleBackColor = true;
 
             // gbSpeed
@@ -62,37 +62,37 @@ namespace MatrixScreensaver
             this.gbSpeed.Controls.Add(this.rbSpeedFast);
             this.gbSpeed.Location = new System.Drawing.Point(12, 108);
             this.gbSpeed.Size = new System.Drawing.Size(260, 88);
-            this.gbSpeed.Text = "Скорость";
+            this.gbSpeed.Text = "Speed";
 
             // rbSpeedSlow
             this.rbSpeedSlow.Location = new System.Drawing.Point(6, 20);
             this.rbSpeedSlow.Size = new System.Drawing.Size(240, 22);
-            this.rbSpeedSlow.Text = "Медленная";
+            this.rbSpeedSlow.Text = "Slow";
             this.rbSpeedSlow.UseVisualStyleBackColor = true;
 
             // rbSpeedMedium
             this.rbSpeedMedium.Location = new System.Drawing.Point(6, 44);
             this.rbSpeedMedium.Size = new System.Drawing.Size(240, 22);
-            this.rbSpeedMedium.Text = "Средняя";
+            this.rbSpeedMedium.Text = "Medium";
             this.rbSpeedMedium.UseVisualStyleBackColor = true;
 
             // rbSpeedFast
             this.rbSpeedFast.Location = new System.Drawing.Point(6, 68);
             this.rbSpeedFast.Size = new System.Drawing.Size(240, 22);
-            this.rbSpeedFast.Text = "Быстрая";
+            this.rbSpeedFast.Text = "Fast";
             this.rbSpeedFast.UseVisualStyleBackColor = true;
 
             // btnOk
             this.btnOk.Location = new System.Drawing.Point(116, 205);
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.Text = "Сохранить";
+            this.btnOk.Text = "Save";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
 
             // btnCancel
             this.btnCancel.Location = new System.Drawing.Point(197, 205);
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.Text = "Отмена";
+            this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 
@@ -108,7 +108,7 @@ namespace MatrixScreensaver
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Настройка Matrix Screensaver";
+            this.Text = "Matrix Screensaver Settings";
 
             this.gbSize.ResumeLayout(false);
             this.gbSpeed.ResumeLayout(false);
