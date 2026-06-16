@@ -22,9 +22,6 @@ namespace MatrixScreensaver
         public MainWindow()
         {
             InitializeComponent();
-#if !DEBUG
-            this.TopMost = true;;
-#endif
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.UserPaint,
@@ -34,10 +31,13 @@ namespace MatrixScreensaver
             timer = new Timer();
             timer.Interval = 50;
             timer.Tick += (s, e) => UpdateFrame();
-
-            this.KeyDown += MainWindow_KeyDown;
             this.MouseClick += MainWindow_MouseClick;
+
+#if !DEBUG
+            this.TopMost = true;
             this.MouseMove += MainWindow_MouseMove;
+            this.KeyDown += MainWindow_KeyDown;
+#endif
         }
 
         public MainWindow(IntPtr previewWindowHandle) : this()
@@ -134,10 +134,6 @@ namespace MatrixScreensaver
 
         private void MainWindow_MouseMove(object sender, MouseEventArgs e)
         {
-#if DEBUG
-            return;
-#endif
-
             if (IsPreviewMode)
                 return;
 
