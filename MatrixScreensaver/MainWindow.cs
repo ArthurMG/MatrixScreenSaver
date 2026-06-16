@@ -97,8 +97,9 @@ namespace MatrixScreensaver
 
         private void UpdateFrame()
         {
-            foreach (var col in columns)
+            for (int i = 0; i < columns.Count; i++)
             {
+                Column col = columns[i];
                 col.Update();
                 col.DrawColumn(graphics);
             }

@@ -17,7 +17,7 @@ namespace MatrixScreensaver
         static Settings()
         {
             CharWidth = Properties.Settings.Default.CharWidth;
-            CharHeight += CharWidth + 4;
+            CharHeight = CharWidth + 4;
             Font = new Font("Consolas", CharWidth - 2, FontStyle.Bold);
             FallSpeed = Properties.Settings.Default.FallSpeed;
         }
