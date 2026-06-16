@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
@@ -6,21 +7,27 @@ namespace MatrixScreensaver
 {
     internal class GlyphProvider
     {
-        private readonly Glyph[] glyphs = new Glyph[Column.Chars.Length * (Settings.AlphaLevels + 1)];
-        private readonly Dictionary<char, int> charToIdx = new Dictionary<char, int>();
+        private static readonly char[] Chars =
+            "ﾊ日ﾋｼﾂｳｰﾅﾐﾓﾆｻﾜｵﾘﾎﾏｴｷﾑﾃｹﾒｶﾕﾗｾﾈｽﾀﾇ012345678\"9Z*+:=.<>｜¦_".ToCharArray();
 
-        public void Init()
+        private readonly Glyph[] glyphs = new Glyph[Chars.Length * (Settings.AlphaLevels + 1)];
+        private readonly Dictionary<char, int> charToIdx = new Dictionary<char, int>();
+        private Random rnd;
+
+        public void Init(Random rnd)
         {
-            for (int i = 0; i < Column.Chars.Length; i++)
+            this.rnd = rnd;
+
+            for (int i = 0; i < Chars.Length; i++)
             {
-                charToIdx.Add(Column.Chars[i], i);
+                charToIdx.Add(Chars[i], i);
             }
 
             //creating chars for each opacity level
             //so we don't need to calculate this on a draw event
-            for (int charIdx = 0; charIdx < Column.Chars.Length; charIdx++)
+            for (int charIdx = 0; charIdx < Chars.Length; charIdx++)
             {
-                var ch = Column.Chars[charIdx];
+                var ch = Chars[charIdx];
                 var chShift = Settings.AlphaLevels + 1;
                 var firstGlyph = CreateGlyph(ch, Constants.Opacity, Color.WhiteSmoke, Settings.MatrixGlowColor);
                 glyphs[charIdx * chShift] = firstGlyph;
@@ -45,6 +52,12 @@ namespace MatrixScreensaver
 
             var result = new Glyph(bmp, c, alpha);
             return result;
+        }
+
+        public Glyph GetRandomGlyphByLevel(int alphaLevel)
+        {
+            char ch = Chars[rnd.Next(Chars.Length)];
+            return GetGlyphByLevel(ch, alphaLevel);
         }
 
         public Glyph GetGlyphByLevel(char ch, int alphaLevel)

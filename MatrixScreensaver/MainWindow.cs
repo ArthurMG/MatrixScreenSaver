@@ -22,9 +22,12 @@ namespace MatrixScreensaver
         public MainWindow()
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | 
-                ControlStyles.AllPaintingInWmPaint | 
-                ControlStyles.UserPaint, 
+#if !DEBUG
+            this.TopMost = true;;
+#endif
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.UserPaint,
                 true);
 
             glyphProvider = new GlyphProvider();
@@ -72,7 +75,7 @@ namespace MatrixScreensaver
             graphics.SmoothingMode = SmoothingMode.None;
             initialMousePosition = Cursor.Position;
 
-            glyphProvider.Init();
+            glyphProvider.Init(rand);
             InitColumns();
             timer.Start();
         }
@@ -129,16 +132,11 @@ namespace MatrixScreensaver
             timer.Dispose();
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            e.Graphics.Clear(BackColor);
-        }
-
         private void MainWindow_MouseMove(object sender, MouseEventArgs e)
         {
-            #if DEBUG
-                return;
-            #endif
+#if DEBUG
+            return;
+#endif
 
             if (IsPreviewMode)
                 return;

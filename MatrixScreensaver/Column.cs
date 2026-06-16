@@ -7,15 +7,12 @@ namespace MatrixScreensaver
 {
     internal class Column
     {
-        public static readonly char[] Chars =
-            "ﾊ日ﾋｼﾂｳｰﾅﾐﾓﾆｻﾜｵﾘﾎﾏｴｷﾑﾃｹﾒｶﾕﾗｾﾈｽﾀﾇ012345678\"9Z*+:=.<>｜¦_".ToCharArray();
-
         private int X;
         private int Y;
         private readonly int moveSpeed;
         private int changeCharsSpeed;
         private readonly int screenHeight;
-        private readonly int columnHeightPx;
+        private readonly int columnHeight;
 
         private readonly Random rand;
         private readonly Glyph[] glyphs;
@@ -37,13 +34,13 @@ namespace MatrixScreensaver
             this.glyphProvider = glyphProvider;
             this.screenHeight = screenHeight;
 
-            columnHeightPx = (length * Settings.CharHeight) + Settings.CharHeight;
+            columnHeight = (length * Settings.CharHeight) + Settings.CharHeight;
 
             glyphs = new Glyph[length];
             // for bitmap height add additional emtpy black square to remove redraw artifacts
             columnBitmap = new Bitmap(
                 Settings.CharWidth,
-                columnHeightPx,
+                columnHeight,
                 PixelFormat.Format32bppPArgb);
 
             cg = Graphics.FromImage(columnBitmap);
@@ -65,17 +62,18 @@ namespace MatrixScreensaver
             bool reachedLowestAlpha = false;
             for (int i = 0; i < glyphs.Length; i++)
             {
-                char c = Chars[rand.Next(Chars.Length)];
-                glyphs[i] = glyphProvider.GetGlyphByLevel(c, alphaLevel);
+                glyphs[i] = glyphProvider.GetRandomGlyphByLevel(alphaLevel);
 
-                if (!reachedLowestAlpha)
+                if (reachedLowestAlpha)
                 {
-                    alphaLevel -= Constants.AlphaStep;
-                    if (alphaLevel < Constants.AlphaStep)
-                    {
-                        alphaLevel = Constants.AlphaStep;
-                        reachedLowestAlpha = true;
-                    }
+                    continue;
+                }
+
+                alphaLevel -= Constants.AlphaStep;
+                if (alphaLevel < Constants.AlphaStep)
+                {
+                    alphaLevel = Constants.AlphaStep;
+                    reachedLowestAlpha = true;
                 }
             }
 
@@ -112,14 +110,12 @@ namespace MatrixScreensaver
 
             // pick random char
             // and set it at the beginning
-            char newChar = Chars[rand.Next(Chars.Length)];
-            var glyphToChange = glyphs[0];
-            glyphs[0] = glyphProvider.GetGlyphByLevel(newChar, glyphToChange.AlphaLevel);
+            glyphs[0] = glyphProvider.GetRandomGlyphByLevel(Constants.Opacity);
 
             // glyph below bottom
-            if (Y - columnHeightPx > screenHeight)
+            if (Y - columnHeight > screenHeight)
             {
-                Y = rand.Next(-screenHeight, -columnHeightPx);
+                Y = rand.Next(-screenHeight, -columnHeight);
                 changeCharsSpeed = 0;
             }
 
