@@ -42,14 +42,18 @@ namespace MatrixScreensaver
 
         private Glyph CreateGlyph(char c, int alpha, Color color, Color glowColor)
         {
-            var bmp = new Bitmap(Settings.CharWidth, Settings.CharHeight, PixelFormat.Format32bppPArgb);
+            var bmp = new Bitmap(Settings.CharHeight, Settings.CharWidth, PixelFormat.Format32bppPArgb);
+            var charAsString = c.ToString();
+            var mainBrush = new SolidBrush(Color.FromArgb(alpha, color));
+            var glowBrush = new SolidBrush(Color.FromArgb(35, glowColor));
             using (var g = Graphics.FromImage(bmp))
             {
-                g.DrawString(c.ToString(), Settings.Font, new SolidBrush(Color.FromArgb(alpha, color)), new Point(0, 0));
-                g.DrawString(c.ToString(), Settings.Font, new SolidBrush(Color.FromArgb(35, glowColor)), new Point(-3, 0));
-                g.DrawString(c.ToString(), Settings.Font, new SolidBrush(Color.FromArgb(35, glowColor)), new Point(3, 0));
+                g.DrawString(charAsString, Settings.Font, mainBrush, new Point(0, 0));
+                g.DrawString(charAsString, Settings.Font, glowBrush, new Point(-3, 0));
+                g.DrawString(charAsString, Settings.Font, glowBrush, new Point(3, 0));
             }
 
+            bmp.RotateFlip(RotateFlipType.Rotate180FlipX);
             var result = new Glyph(bmp, c, alpha);
             return result;
         }
