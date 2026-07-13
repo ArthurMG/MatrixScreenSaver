@@ -8,5 +8,8 @@
     <Setting Name="FallSpeed" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
+    <Setting Name="GlyphColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">36, 200, 89</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

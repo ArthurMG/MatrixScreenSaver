@@ -20,6 +20,9 @@ namespace MatrixScreensaver
                 [nameof(RbSpeedFast_Text)] = "Fast",
                 [nameof(BtnOk_Text)] = "Save",
                 [nameof(BtnCancel_Text)] = "Cancel",
+                [nameof(GbColor_Text)] = "Color",
+                [nameof(LblColor_Text)] = "Character:",
+                [nameof(BtnSelectColor_Text)] = "Select...",
             },
             ["ru"] = new Dictionary<string, string>
             {
@@ -34,6 +37,9 @@ namespace MatrixScreensaver
                 [nameof(RbSpeedFast_Text)] = "Быстрая",
                 [nameof(BtnOk_Text)] = "Сохранить",
                 [nameof(BtnCancel_Text)] = "Отмена",
+                [nameof(GbColor_Text)] = "Цвет",
+                [nameof(LblColor_Text)] = "Символы:",
+                [nameof(BtnSelectColor_Text)] = "Выбрать...",
             }
         };
 
@@ -56,5 +62,8 @@ namespace MatrixScreensaver
         public static string RbSpeedFast_Text => _current[nameof(RbSpeedFast_Text)];
         public static string BtnOk_Text => _current[nameof(BtnOk_Text)];
         public static string BtnCancel_Text => _current[nameof(BtnCancel_Text)];
+        public static string GbColor_Text => _current[nameof(GbColor_Text)];
+        public static string LblColor_Text => _current[nameof(LblColor_Text)];
+        public static string BtnSelectColor_Text => _current[nameof(BtnSelectColor_Text)];
     }
 }

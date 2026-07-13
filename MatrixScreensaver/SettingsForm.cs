@@ -12,9 +12,6 @@ namespace MatrixScreensaver
         {
             InitializeComponent();
             ApplyLocalization();
-            this.Load += SettingsForm_Load;
-            this.btnOk.Click += BtnOk_Click;
-            this.btnCancel.Click += BtnCancel_Click;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -28,6 +25,8 @@ namespace MatrixScreensaver
             rbSpeedSlow.Checked  =  savedFallSpeed == FallSpeed.Slow;
             rbSpeedFast.Checked  =  savedFallSpeed == FallSpeed.Fast;
             rbSpeedMedium.Checked = savedFallSpeed == FallSpeed.Medium;
+
+            pbColorPreview.BackColor = Properties.Settings.Default.GlyphColor;
         }
 
         private void BtnOk_Click(object sender, EventArgs e)
@@ -42,9 +41,20 @@ namespace MatrixScreensaver
                 rbSpeedFast.Checked ? FallSpeed.Fast :
                                       FallSpeed.Medium);
 
+            Properties.Settings.Default.GlyphColor = pbColorPreview.BackColor;
+
             Properties.Settings.Default.Save();
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void BtnSelectColor_Click(object sender, EventArgs e)
+        {
+            colorDialog.Color = pbColorPreview.BackColor;
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                pbColorPreview.BackColor = colorDialog.Color;
+            }
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -64,6 +74,9 @@ namespace MatrixScreensaver
             rbSpeedSlow.Text = LocalizedStrings.RbSpeedSlow_Text;
             rbSpeedMedium.Text = LocalizedStrings.RbSpeedMedium_Text;
             rbSpeedFast.Text = LocalizedStrings.RbSpeedFast_Text;
+            gbColor.Text = LocalizedStrings.GbColor_Text;
+            lblColor.Text = LocalizedStrings.LblColor_Text;
+            btnSelectColor.Text = LocalizedStrings.BtnSelectColor_Text;
             btnOk.Text = LocalizedStrings.BtnOk_Text;
             btnCancel.Text = LocalizedStrings.BtnCancel_Text;
         }

@@ -46,5 +46,17 @@ namespace MatrixScreensaver.Properties {
                 this["FallSpeed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("36, 200, 89")]
+        public global::System.Drawing.Color GlyphColor {
+            get {
+                return ((global::System.Drawing.Color)(this["GlyphColor"]));
+            }
+            set {
+                this["GlyphColor"] = value;
+            }
+        }
     }
 }
