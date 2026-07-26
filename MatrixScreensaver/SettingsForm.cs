@@ -26,6 +26,7 @@ namespace MatrixScreensaver
             rbSpeedFast.Checked  =  savedFallSpeed == FallSpeed.Fast;
             rbSpeedMedium.Checked = savedFallSpeed == FallSpeed.Medium;
 
+            nudGlowOffset.Value = Properties.Settings.Default.GlowOffset;
             pbColorPreview.BackColor = Properties.Settings.Default.GlyphColor;
         }
 
@@ -42,6 +43,7 @@ namespace MatrixScreensaver
                                       FallSpeed.Medium);
 
             Properties.Settings.Default.GlyphColor = pbColorPreview.BackColor;
+            Properties.Settings.Default.GlowOffset = (int)nudGlowOffset.Value;
 
             Properties.Settings.Default.Save();
             DialogResult = DialogResult.OK;
@@ -77,6 +79,8 @@ namespace MatrixScreensaver
             gbColor.Text = LocalizedStrings.GbColor_Text;
             lblColor.Text = LocalizedStrings.LblColor_Text;
             btnSelectColor.Text = LocalizedStrings.BtnSelectColor_Text;
+            gbGlow.Text = LocalizedStrings.GbGlow_Text;
+            lblGlowOffset.Text = LocalizedStrings.LblGlowOffset_Text;
             btnOk.Text = LocalizedStrings.BtnOk_Text;
             btnCancel.Text = LocalizedStrings.BtnCancel_Text;
         }

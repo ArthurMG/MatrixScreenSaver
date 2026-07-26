@@ -49,8 +49,8 @@ namespace MatrixScreensaver
             using (var g = Graphics.FromImage(bmp))
             {
                 g.DrawString(charAsString, Settings.Font, mainBrush, new Point(0, 0));
-                g.DrawString(charAsString, Settings.Font, glowBrush, new Point(-3, 0));
-                g.DrawString(charAsString, Settings.Font, glowBrush, new Point(3, 0));
+                g.DrawString(charAsString, Settings.Font, glowBrush, new Point(-Settings.GlowOffset, 0));
+                g.DrawString(charAsString, Settings.Font, glowBrush, new Point(Settings.GlowOffset, 0));
             }
 
             bmp.RotateFlip(RotateFlipType.Rotate180FlipX);

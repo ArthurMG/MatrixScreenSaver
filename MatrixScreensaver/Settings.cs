@@ -12,6 +12,7 @@ namespace MatrixScreensaver
         public static readonly Color MatrixGlowColor;
         public static readonly Font Font;
         public static readonly int FallSpeed;
+        public static readonly int GlowOffset;
         public static int CharWidth;
         public static int CharHeight;
 
@@ -21,6 +22,7 @@ namespace MatrixScreensaver
             CharHeight = CharWidth + 4;
             Font = new Font("Consolas", CharWidth - 2, FontStyle.Bold);
             FallSpeed = Properties.Settings.Default.FallSpeed;
+            GlowOffset = Properties.Settings.Default.GlowOffset;
             MatrixColor = Properties.Settings.Default.GlyphColor;
             // make glow color a little lighter
             MatrixGlowColor = Color.FromArgb(

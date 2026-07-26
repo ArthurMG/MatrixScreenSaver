@@ -58,5 +58,17 @@ namespace MatrixScreensaver.Properties {
                 this["GlyphColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public int GlowOffset {
+            get {
+                return ((int)(this["GlowOffset"]));
+            }
+            set {
+                this["GlowOffset"] = value;
+            }
+        }
     }
 }

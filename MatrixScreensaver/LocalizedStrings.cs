@@ -23,6 +23,8 @@ namespace MatrixScreensaver
                 [nameof(GbColor_Text)] = "Color",
                 [nameof(LblColor_Text)] = "Character:",
                 [nameof(BtnSelectColor_Text)] = "Select...",
+                [nameof(GbGlow_Text)] = "Glow",
+                [nameof(LblGlowOffset_Text)] = "Offset:",
             },
             ["ru"] = new Dictionary<string, string>
             {
@@ -40,6 +42,8 @@ namespace MatrixScreensaver
                 [nameof(GbColor_Text)] = "Цвет",
                 [nameof(LblColor_Text)] = "Символы:",
                 [nameof(BtnSelectColor_Text)] = "Выбрать...",
+                [nameof(GbGlow_Text)] = "Свечение",
+                [nameof(LblGlowOffset_Text)] = "Смещение:",
             }
         };
 
@@ -65,5 +69,7 @@ namespace MatrixScreensaver
         public static string GbColor_Text => _current[nameof(GbColor_Text)];
         public static string LblColor_Text => _current[nameof(LblColor_Text)];
         public static string BtnSelectColor_Text => _current[nameof(BtnSelectColor_Text)];
+        public static string GbGlow_Text => _current[nameof(GbGlow_Text)];
+        public static string LblGlowOffset_Text => _current[nameof(LblGlowOffset_Text)];
     }
 }

@@ -11,5 +11,8 @@
     <Setting Name="GlyphColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">36, 200, 89</Value>
     </Setting>
+    <Setting Name="GlowOffset" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
