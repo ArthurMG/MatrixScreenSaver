@@ -118,6 +118,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="CreateScrFile" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
-    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(TargetDir)$(TargetName).scr" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFiles="$(TargetDir)Matrix.scr" />
   </Target>
 </Project>
