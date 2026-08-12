@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="CharWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">18</Value>
+      <Value Profile="(Default)">16</Value>
     </Setting>
     <Setting Name="FallSpeed" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -12,7 +12,7 @@
       <Value Profile="(Default)">36, 200, 89</Value>
     </Setting>
     <Setting Name="GlowOffset" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
   </Settings>
 </SettingsFile>

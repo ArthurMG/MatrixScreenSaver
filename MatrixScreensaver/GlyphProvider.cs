@@ -29,12 +29,12 @@ namespace MatrixScreensaver
             {
                 var ch = Chars[charIdx];
                 var chShift = Settings.AlphaLevels + 1;
-                var firstGlyph = CreateGlyph(ch, Constants.Opacity, Color.WhiteSmoke, Settings.MatrixGlowColor);
+                var firstGlyph = CreateGlyph(ch, Constants.Opacity, Color.WhiteSmoke, Settings.GlyphGlowColor);
                 glyphs[charIdx * chShift] = firstGlyph;
 
                 for (int alphaLevel = Constants.Opacity - Constants.AlphaStep, alphaIdx = 1; alphaLevel > 0; alphaLevel -= Constants.AlphaStep, alphaIdx++)
                 {
-                    var glyph = CreateGlyph(ch, alphaLevel, Settings.MatrixColor, Settings.MatrixGlowColor);
+                    var glyph = CreateGlyph(ch, alphaLevel, Settings.GlyphColor, Settings.GlyphGlowColor);
                     glyphs[(charIdx * chShift) + alphaIdx] = glyph;
                 }
             }

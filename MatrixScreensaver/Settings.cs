@@ -8,8 +8,8 @@ namespace MatrixScreensaver
         public const int AlphaLevels = 16;
         public const int MinCharsCount = 14;
         public const int MaxCharsCount = 26;
-        public static readonly Color MatrixColor;
-        public static readonly Color MatrixGlowColor;
+        public static readonly Color GlyphColor;
+        public static readonly Color GlyphGlowColor;
         public static readonly Font Font;
         public static readonly int FallSpeed;
         public static readonly int GlowOffset;
@@ -23,12 +23,12 @@ namespace MatrixScreensaver
             Font = new Font("Consolas", CharWidth - 2, FontStyle.Bold);
             FallSpeed = Properties.Settings.Default.FallSpeed;
             GlowOffset = Properties.Settings.Default.GlowOffset;
-            MatrixColor = Properties.Settings.Default.GlyphColor;
+            GlyphColor = Properties.Settings.Default.GlyphColor;
             // make glow color a little lighter
-            MatrixGlowColor = Color.FromArgb(
-                Math.Min(255, (int)(MatrixColor.R * 1.2)),
-                Math.Min(255, (int)(MatrixColor.G * 1.2)),
-                Math.Min(255, (int)(MatrixColor.B * 1.2))
+            GlyphGlowColor = Color.FromArgb(
+                Math.Min(255, (int)(GlyphColor.R * 1.2)),
+                Math.Min(255, (int)(GlyphColor.G * 1.2)),
+                Math.Min(255, (int)(GlyphColor.B * 1.2))
             );
         }
     }

@@ -25,7 +25,7 @@ namespace MatrixScreensaver.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("18")]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
         public int CharWidth {
             get {
                 return ((int)(this["CharWidth"]));
@@ -61,7 +61,7 @@ namespace MatrixScreensaver.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
         public int GlowOffset {
             get {
                 return ((int)(this["GlowOffset"]));
