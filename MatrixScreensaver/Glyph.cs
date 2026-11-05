@@ -2,19 +2,16 @@
 
 namespace MatrixScreensaver
 {
-    internal class Glyph
+    internal sealed class Glyph
     {
         public Bitmap Bitmap { get; private set; }
 
-        public char Char { get; private set; }
+        public int GlyphNumber { get; private set; }
 
-        public int AlphaLevel { get; private set; }
-
-        public Glyph(Bitmap bitmap, char ch, int alphaLevel)
+        public Glyph(Bitmap bitmap, int glyphNumber)
         {
             Bitmap = bitmap;
-            AlphaLevel = alphaLevel;
-            Char = ch;
+            GlyphNumber = glyphNumber;
         }
     }
 }

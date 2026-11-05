@@ -7,7 +7,7 @@ namespace MatrixScreensaver
     {
         public const int AlphaLevels = 16;
         public const int MinCharsCount = 14;
-        public const int MaxCharsCount = 26;
+        public const int MaxCharsCount = AlphaLevels + 2;
         public static readonly Color GlyphColor;
         public static readonly Color GlyphGlowColor;
         public static readonly Font Font;

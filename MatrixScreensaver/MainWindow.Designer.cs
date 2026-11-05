@@ -37,7 +37,6 @@
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
-            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
@@ -47,6 +46,7 @@
             this.Text = "MainWindow";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainWindow_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainWindow_Paint);
             this.ResumeLayout(false);
 
         }

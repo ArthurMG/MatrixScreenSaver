@@ -12,7 +12,6 @@ GDI+
 
 Development Goals
 Primary goals:
-Maintain compatibility with existing installations.
 Keep code easy to understand and maintain.
 Avoid introducing unnecessary dependencies.
 
@@ -24,8 +23,8 @@ Main components:
 MainWindow — screensaver window
 SettingsForm - form for chaning user settings
 Glyph — represents a symbol that gets draw
-GlyphProvider — creates glyphes and stores glyphe cache
-Column — represents a group of glyphes that are rendered in vertical way
+GlyphProvider — creates glyphes and stores glyphes cache
+Column — represents a group of glyphes that are rendered in a vertical way
 Settings — screensaver global settings
 LocalizedStrings - stores strings for locatlization
 
@@ -52,7 +51,6 @@ DataHelper
 Agent Workflow
 Before implementing a change:
 Read README.md.
-Read docs/architecture.md.
 Search for existing implementations before creating new code.
 Prefer extending existing systems over creating parallel systems.
 

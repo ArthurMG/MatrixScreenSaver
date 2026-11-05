@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -14,23 +13,36 @@ namespace MatrixScreensaver
         private readonly Random rand = new Random();
         private readonly GlyphProvider glyphProvider;
         private readonly IntPtr previewWindowHandle = IntPtr.Zero;
-        private bool IsPreviewMode = false;
+        private readonly bool IsPreviewMode = false;
+        private readonly int ScreenHeight = Screen.PrimaryScreen.Bounds.Height;
+        private readonly int ScreenWidth = Screen.PrimaryScreen.Bounds.Width;
+        private readonly BufferedGraphics grafx;
         private Point initialMousePosition;
-        private Graphics graphics;
-        private List<Column> columns;
+        private Column[] columns;
 
         public MainWindow()
         {
             InitializeComponent();
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer |
-                ControlStyles.AllPaintingInWmPaint |
-                ControlStyles.UserPaint,
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint |
+                ControlStyles.UserPaint |
+                ControlStyles.Opaque,
                 true);
+            this.UpdateStyles();
+            BufferedGraphicsContext context = BufferedGraphicsManager.Current;
+            context.MaximumBuffer = new Size(ScreenWidth + 1, ScreenHeight + 1);
+            grafx = context.Allocate(CreateGraphics(), new Rectangle(0, 0, ScreenWidth, ScreenHeight));
+            grafx.Graphics.CompositingQuality = CompositingQuality.HighSpeed;
+            grafx.Graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+            grafx.Graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
+            grafx.Graphics.SmoothingMode = SmoothingMode.None;
 
             glyphProvider = new GlyphProvider();
-            timer = new Timer();
-            timer.Interval = 50;
-            timer.Tick += (s, e) => UpdateFrame();
+            timer = new Timer
+            {
+                Interval = 40
+            };
+
+            timer.Tick += Timer_Tick;
             this.MouseClick += MainWindow_MouseClick;
 
 #if !DEBUG
@@ -67,12 +79,7 @@ namespace MatrixScreensaver
                 Cursor.Hide();
             }
 
-            graphics = CreateGraphics();
-            graphics.CompositingMode = CompositingMode.SourceOver;
-            graphics.CompositingQuality = CompositingQuality.HighSpeed;
-            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-            graphics.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-            graphics.SmoothingMode = SmoothingMode.None;
+
             initialMousePosition = Cursor.Position;
 
             glyphProvider.Init(rand);
@@ -82,30 +89,40 @@ namespace MatrixScreensaver
 
         private void InitColumns()
         {
-            columns = new List<Column>();
+            int columnCount = ScreenWidth / Settings.CharWidth;
+            columns = new Column[columnCount];
 
-            int columnCount = Screen.PrimaryScreen.Bounds.Width / Settings.CharWidth;
-            for (int i = 0; i < columnCount; i++)
+            for (int i = 0; i < columns.Length; i++)
             {
-                columns.Add(new Column(
+                columns[i] = new Column(
                     i * Settings.CharWidth,
-                    rand.Next(-2000, 0),
+                    rand.Next(-1400, -300),
                     rand.Next(Settings.MinCharsCount, Settings.MaxCharsCount),
                     rand,
-                    Screen.PrimaryScreen.Bounds.Height,
+                    ScreenHeight,
                     glyphProvider
-                ));
+                );
             }
         }
 
-        private void UpdateFrame()
+        private void MainWindow_Paint(object sender, PaintEventArgs e)
         {
-            for (int i = 0; i < columns.Count; i++)
+            grafx.Graphics.Clear(Color.Black);
+            for (int i = 0; i < columns.Length; i++)
             {
-                Column col = columns[i];
-                col.Update();
-                col.DrawColumn(graphics);
+                columns[i].DrawColumn(grafx.Graphics, 0, ScreenHeight);
             }
+            grafx.Render();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < columns.Length; i++)
+            {
+                columns[i].Update();
+            }
+
+            Invalidate(false);
         }
 
         [DllImport("user32.dll")]
@@ -130,6 +147,12 @@ namespace MatrixScreensaver
             base.OnClosing(e);
             timer.Stop();
             timer.Dispose();
+            grafx.Dispose();
+
+            for (int i = 0; i < columns.Length; i++)
+            {
+                columns[i].Dispose();
+            }
         }
 
         private void MainWindow_MouseMove(object sender, MouseEventArgs e)

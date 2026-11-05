@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
 namespace MatrixScreensaver
 {
-    internal class Column
+    internal sealed class Column : IDisposable
     {
-        private int X;
-        private int Y;
+        private Rectangle Position;
+
         private readonly int moveSpeed;
         private int changeCharsSpeed;
         private readonly int screenHeight;
-        private readonly int columnHeight;
 
         private readonly Random rand;
         private readonly Glyph[] glyphs;
-        private readonly Bitmap columnBitmap;
-        private readonly Graphics cg;
-
         private readonly GlyphProvider glyphProvider;
+
+        // glyphs are composed into a single strip so a frame needs one blit per column
+        private readonly Bitmap glyphStrip;
+        private readonly Graphics glyphStripGraphics;
+        private bool glyphStripDirty = true;
 
         public Column(int x,
             int startY,
@@ -28,39 +28,27 @@ namespace MatrixScreensaver
             int screenHeight,
             GlyphProvider glyphProvider)
         {
-            this.X = x;
-            this.Y = startY;
             this.rand = rand;
             this.glyphProvider = glyphProvider;
             this.screenHeight = screenHeight;
 
-            columnHeight = (length * Settings.CharHeight) + Settings.CharHeight;
+            Position = new Rectangle(x, startY, Settings.CharWidth, length * Settings.CharHeight);
 
             glyphs = new Glyph[length];
-            // for bitmap height add additional emtpy black square to remove redraw artifacts
-            columnBitmap = new Bitmap(
-                Settings.CharWidth,
-                columnHeight,
-                PixelFormat.Format32bppPArgb);
+            glyphStrip = new Bitmap(Settings.CharWidth, length * Settings.CharHeight, PixelFormat.Format32bppPArgb);
+            glyphStripGraphics = Graphics.FromImage(glyphStrip);
 
-            cg = Graphics.FromImage(columnBitmap);
-            cg.CompositingMode = CompositingMode.SourceOver;
-            cg.CompositingQuality = CompositingQuality.HighSpeed;
-            cg.InterpolationMode = InterpolationMode.NearestNeighbor;
-            cg.PixelOffsetMode = PixelOffsetMode.HighSpeed;
-            cg.SmoothingMode = SmoothingMode.None;
-
-            var rndCoef = rand.Next(1, 6);
+            var rndCoef = rand.Next(1, 5);
             moveSpeed = Settings.FallSpeed + rndCoef;
             changeCharsSpeed += rndCoef;
-            RandomizeGlyphs();
+            GenerateGlyphs();
         }
 
-        private void RandomizeGlyphs()
+        private void GenerateGlyphs()
         {
             var alphaLevel = Constants.Opacity;
             bool reachedLowestAlpha = false;
-            for (int i = 0; i < glyphs.Length; i++)
+            for (int i = glyphs.Length - 1; i >= 0; i--)
             {
                 glyphs[i] = glyphProvider.GetRandomGlyphByLevel(alphaLevel);
 
@@ -76,25 +64,11 @@ namespace MatrixScreensaver
                     reachedLowestAlpha = true;
                 }
             }
-
-            RedrawColumn();
-        }
-
-        private void RedrawColumn()
-        {
-            cg.Clear(Color.Black);
-
-            int y = Settings.CharHeight;
-            for (int i = glyphs.Length - 1; i > -1; i--)
-            {
-                cg.DrawImageUnscaled(glyphs[i].Bitmap, 0, y);
-                y += Settings.CharHeight;
-            }
         }
 
         public void Update()
         {
-            Y += moveSpeed;
+            Position.Y += moveSpeed;
             changeCharsSpeed++;
 
             if (changeCharsSpeed % 7 != 0)
@@ -102,29 +76,57 @@ namespace MatrixScreensaver
                 return;
             }
 
-            for (int current = glyphs.Length - 1, prev = glyphs.Length - 2; current > 0; current--, prev--)
+            for (int current = 0, next = 1; current < glyphs.Length - 1; current++, next++)
             {
-                var prevGlyph = glyphProvider.GetGlyphByLevel(glyphs[prev].Char, glyphs[current].AlphaLevel);
-                glyphs[current] = prevGlyph;
+                var nextGlyph = glyphProvider.GetMoreTransparentGlyph(glyphs[next]);
+                glyphs[current] = nextGlyph;
             }
 
-            // pick random char
-            // and set it at the beginning
-            glyphs[0] = glyphProvider.GetRandomGlyphByLevel(Constants.Opacity);
+            // changing the "head" by random non opacite char
+            glyphs[glyphs.Length - 1] = glyphProvider.GetRandomGlyphByLevel(Constants.Opacity);
+            glyphStripDirty = true;
 
-            // glyph below bottom
-            if (Y - columnHeight > screenHeight)
+            // column is below bottom
+            if (Position.Y - Position.Height > screenHeight)
             {
-                Y = rand.Next(-screenHeight, -columnHeight);
+                Position.Y = rand.Next(-screenHeight, -Position.Height);
                 changeCharsSpeed = 0;
             }
-
-            RedrawColumn();
         }
 
-        public void DrawColumn(Graphics g)
+        public void DrawColumn(Graphics g, int clipTop, int clipBottom)
         {
-            g.DrawImageUnscaled(columnBitmap, X, Y);
+            // column is completely outside of the visible area
+            if (Position.Bottom <= clipTop || Position.Y >= clipBottom)
+            {
+                return;
+            }
+
+            if (glyphStripDirty)
+            {
+                RebuildGlyphStrip();
+            }
+
+            g.DrawImageUnscaled(glyphStrip, Position.X, Position.Y);
+        }
+
+        private void RebuildGlyphStrip()
+        {
+            glyphStripGraphics.Clear(Color.Transparent);
+
+            int glyphHeight = Settings.CharHeight;
+            for (int i = 0; i < glyphs.Length; i++)
+            {
+                glyphStripGraphics.DrawImageUnscaled(glyphs[i].Bitmap, 0, i * glyphHeight);
+            }
+
+            glyphStripDirty = false;
+        }
+
+        public void Dispose()
+        {
+            glyphStripGraphics.Dispose();
+            glyphStrip.Dispose();
         }
     }
 }
