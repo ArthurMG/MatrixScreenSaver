@@ -8,13 +8,14 @@ namespace MatrixScreensaver
     {
         private Rectangle Position;
 
-        private readonly int moveSpeed;
+        private readonly float moveSpeed;
         private int changeCharsSpeed;
         private readonly int screenHeight;
 
         private readonly Random rand;
         private readonly Glyph[] glyphs;
         private readonly GlyphProvider glyphProvider;
+        private static readonly float[] randomFallSpeed = new float[] { 0.5F, 1F, 1.5F, 2F, 2.5F };
 
         // glyphs are composed into a single strip so a frame needs one blit per column
         private readonly Bitmap glyphStrip;
@@ -38,8 +39,8 @@ namespace MatrixScreensaver
             glyphStrip = new Bitmap(Settings.CharWidth, length * Settings.CharHeight, PixelFormat.Format32bppPArgb);
             glyphStripGraphics = Graphics.FromImage(glyphStrip);
 
-            var rndCoef = rand.Next(1, 5);
-            moveSpeed = Settings.FallSpeed + rndCoef;
+            var rndCoef = rand.Next(0, 5);
+            moveSpeed = Settings.FallSpeed + randomFallSpeed[rndCoef];
             changeCharsSpeed += rndCoef;
             GenerateGlyphs();
         }
@@ -68,7 +69,7 @@ namespace MatrixScreensaver
 
         public void Update()
         {
-            Position.Y += moveSpeed;
+            Position.Y += (int)moveSpeed;
             changeCharsSpeed++;
 
             if (changeCharsSpeed % 7 != 0)

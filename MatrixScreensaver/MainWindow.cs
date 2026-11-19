@@ -96,7 +96,7 @@ namespace MatrixScreensaver
             {
                 columns[i] = new Column(
                     i * Settings.CharWidth,
-                    rand.Next(-1400, -300),
+                    rand.Next(-1500, -300),
                     rand.Next(Settings.MinCharsCount, Settings.MaxCharsCount),
                     rand,
                     ScreenHeight,
